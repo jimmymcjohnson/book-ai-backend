@@ -268,24 +268,4 @@ if __name__ == '__main__':
 
 ---
 
-### **File 2: Verify `requirements.txt`**
 
-1. Click on **`requirements.txt`**
-2. Make sure it ONLY has these 4 lines:
-```
-flask==3.0.0
-flask-cors==4.0.0
-PyPDF2==3.0.1
-gunicorn==21.2.0
-```
-
-3. If it has MORE (like faiss-cpu, sentence-transformers), click edit and remove them
-4. Save with just the 4 lines above
-
----
-
-### **File 3: Check `Procfile` (Optional but Helpful)**
-
-1. If you have a `Procfile`, make sure it says:
-```
-web: gunicorn main:app
