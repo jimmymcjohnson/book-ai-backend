@@ -8,8 +8,6 @@ from flask_cors import CORS
 import PyPDF2
 import io
 import json
-import numpy as np
-from collections import Counter
 import re
 
 app = Flask(__name__)
