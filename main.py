@@ -155,8 +155,17 @@ def ask_question():
         
         # Create simple answer
         if combined_text:
-            answer = f"Based on {len(books_used)} book(s), here's what I found:\n\n"
-            answer += combined_text[:500] + "..."
+    # Get the best matching passage
+    best_idx = top_indices[0]  # The highest scoring chunk
+    best_passage = all_chunks[best_idx]
+    best_book = chunk_to_book[best_idx]
+    
+    answer = f"From '{best_book}':\n\n{best_passage}\n\n"
+    
+    # If there are other relevant passages, mention them
+    if len(top_indices) > 1:
+        answer += f"\n(Also found relevant info in {len(books_used)} book(s))"
+
         else:
             answer = "I couldn't find relevant information in your books about that topic."
         
