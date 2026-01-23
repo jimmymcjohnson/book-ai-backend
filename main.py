@@ -34,7 +34,7 @@ def calculate_similarity(query_words, chunk_words):
     overlap = len(query_set & chunk_set)
     return overlap / len(query_set)
 
-def split_text_into_chunks(text, chunk_size=500):
+def split_text_into_chunks(text, chunk_size=200):
     """Split text into manageable chunks"""
     words = text.split()
     chunks = []
@@ -156,7 +156,7 @@ def ask_question():
             best_book = chunk_to_book[best_idx]
             
             # Show the most relevant passage
-            answer = f"From '{best_book}':\n\n{best_passage[:500]}"
+            answer = f"From '{best_book}':\n\n{best_passage[:300]}"
             if len(best_passage) > 500:
                 answer += "..."
             
