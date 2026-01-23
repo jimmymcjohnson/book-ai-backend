@@ -107,7 +107,6 @@ def upload_book():
     except Exception as e:
         print(f"❌ Error uploading book: {e}")
         return jsonify({'error': str(e)}), 500
-
 @app.route('/ask', methods=['POST'])
 def ask_question():
     """Answer a question about the loaded books"""
@@ -150,22 +149,20 @@ def ask_question():
                 'book': book_name
             })
         
-        # Combine passages for answer
-        combined_text = " ".join([all_chunks[idx] for idx in top_indices])
-        
-        # Create simple answer
-        if combined_text:
-    # Get the best matching passage
-    best_idx = top_indices[0]  # The highest scoring chunk
-    best_passage = all_chunks[best_idx]
-    best_book = chunk_to_book[best_idx]
-    
-    answer = f"From '{best_book}':\n\n{best_passage}\n\n"
-    
-    # If there are other relevant passages, mention them
-    if len(top_indices) > 1:
-        answer += f"\n(Also found relevant info in {len(books_used)} book(s))"
-
+        # Create answer from the MOST relevant passage
+        if top_indices and similarities[0][1] > 0:
+            best_idx = top_indices[0]
+            best_passage = all_chunks[best_idx]
+            best_book = chunk_to_book[best_idx]
+            
+            # Show the most relevant passage
+            answer = f"From '{best_book}':\n\n{best_passage[:500]}"
+            if len(best_passage) > 500:
+                answer += "..."
+            
+            # Mention if found in multiple books
+            if len(books_used) > 1:
+                answer += f"\n\n(Also found relevant information in {len(books_used)-1} other book(s))"
         else:
             answer = "I couldn't find relevant information in your books about that topic."
         
